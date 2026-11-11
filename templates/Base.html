@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Student Record Management System{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="app-header">
+        <h1>Student Record Management System</h1>
+        <span>{% block subtitle %}{% endblock %}</span>
+    </div>
+
+    <div class="layout">
+        <nav class="sidebar">
+            <a href="/dashboard" class="{{ 'active' if request.path == '/dashboard' else '' }}">Dashboard</a>
+            <a href="/records" class="{{ 'active' if request.path == '/records' else '' }}">Manage Records</a>
+            <a href="/search" class="{{ 'active' if request.path == '/search' else '' }}">Search Records</a>
+            <a href="/reports" class="{{ 'active' if request.path == '/reports' else '' }}">Reports</a>
+            <a href="/logout">Logout</a>
+        </nav>
+
+        <main class="main-area">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</body>
+</html>

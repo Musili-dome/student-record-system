@@ -1,0 +1,41 @@
+{% extends "student_base.html" %}
+{% block title %}My Dashboard{% endblock %}
+{% block subtitle %}My Dashboard{% endblock %}
+
+{% block content %}
+<div class="welcome-card student">
+    <h2>Welcome, {{ student.full_name }}</h2>
+    <p>View your student record, keep your contact details up to date, and download a copy of your record.</p>
+</div>
+
+<div class="stat-row">
+    <div class="stat-card">
+        <span class="stat-number small">{{ student.admission_no }}</span>
+        <span class="stat-label">Admission Number</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-number small">{{ student.course or '-' }}</span>
+        <span class="stat-label">Course</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-number small">{{ student.year_of_study or '-' }}</span>
+        <span class="stat-label">Year of Study</span>
+    </div>
+</div>
+
+<h3 class="section-title">Quick Actions</h3>
+<div class="action-row">
+    <a class="action-card" href="/student/record">
+        <h4>View My Record</h4>
+        <p>See all the details held about you.</p>
+    </a>
+    <a class="action-card" href="/student/record#contact">
+        <h4>Update Contact Info</h4>
+        <p>Keep your phone number current.</p>
+    </a>
+    <a class="action-card" href="/student/report">
+        <h4>Download My Report</h4>
+        <p>Get a CSV copy of your record.</p>
+    </a>
+</div>
+{% endblock %}

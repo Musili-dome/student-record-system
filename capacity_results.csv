@@ -1,0 +1,5 @@
+records,batch_added,batch_seconds,ms_per_add,mysql_rows,list_nodes,hash_entries,searches_found,search_us,duplicate_refused
+1000,1000,4.98,4.98,1000,1000,1000,200/200,3.11,yes
+5000,4000,22.51,5.63,5000,5000,5000,200/200,7.65,yes
+10000,5000,43.1,8.62,10000,10000,10000,200/200,21.21,yes
+20000,10000,160.61,16.06,20000,20000,20000,200/200,58.8,yes

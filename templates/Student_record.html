@@ -1,0 +1,37 @@
+{% extends "student_base.html" %}
+{% block title %}My Record{% endblock %}
+{% block subtitle %}My Record{% endblock %}
+
+{% block content %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% for category, message in messages %}
+    <div class="flash {{ category }}">{{ message }}</div>
+  {% endfor %}
+{% endwith %}
+
+<div class="card record-card">
+    <h2>My Details</h2>
+    <table class="details-table">
+        <tr><th>Full Name</th><td>{{ student.full_name }}</td></tr>
+        <tr><th>Admission Number</th><td>{{ student.admission_no }}</td></tr>
+        <tr><th>Course</th><td>{{ student.course or '-' }}</td></tr>
+        <tr><th>Year of Study</th><td>{{ student.year_of_study or '-' }}</td></tr>
+        <tr><th>Contact</th><td>{{ student.contact or '-' }}</td></tr>
+        <tr><th>Email</th><td>{{ student.email or '-' }}</td></tr>
+    </table>
+    <div class="record-actions no-print">
+        <a class="btn btn-green inline" href="/student/report">Download CSV</a>
+        <button type="button" class="btn btn-purple inline" onclick="window.print()">Print / Save as PDF</button>
+    </div>
+</div>
+
+<div class="card contact-card no-print" id="contact">
+    <h2>Update Contact Info</h2>
+    <p class="hint">You can update your contact number here. Other details can only be changed by the administrator.</p>
+    <form method="POST" action="/student/record/update" class="search-bar">
+        <input type="text" name="contact" value="{{ student.contact or '' }}" placeholder="e.g. 07XXXXXXXX" required>
+
+        <button type="submit" class="btn btn-blue">Update</button>
+    </form>
+</div>
+{% endblock %}

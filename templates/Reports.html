@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Reports{% endblock %}
+{% block subtitle %}Reports{% endblock %}
+
+{% block content %}
+<div class="card report-card">
+    <h2>Student Report{% if selected %}: {{ selected }}{% endif %}</h2>
+
+    <form method="GET" action="/reports" class="report-toolbar">
+        <select name="course">
+            <option value="">All courses</option>
+            {% for c in courses %}
+            <option value="{{ c }}" {% if c == selected %}selected{% endif %}>{{ c }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-blue inline">Generate</button>
+        <a class="btn btn-green inline" href="/reports/export?course={{ selected|urlencode }}">Export CSV</a>
+        <button type="button" class="btn btn-purple inline" onclick="window.print()">Print / Save as PDF</button>
+    </form>
+
+    <p class="report-total">Total: <strong>{{ students|length }}</strong> student{{ '' if students|length == 1 else 's' }}</p>
+
+    <table class="records-table">
+        <tr><th>#</th><th>Adm. No.</th><th>Full Name</th><th>Course</th><th>Year</th><th>Contact</th><th>Email</th></tr>
+        {% for s in students %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ s.admission_no }}</td>
+            <td>{{ s.full_name }}</td>
+            <td>{{ s.course }}</td>
+            <td>{{ s.year_of_study }}</td>
+            <td>{{ s.contact }}</td>
+            <td class="email-cell">{{ s.email or '-' }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="7">No students found.</td></tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

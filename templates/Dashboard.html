@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block subtitle %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="welcome-card">
+    <h2>Welcome, Administrator</h2>
+    <p>Manage student records, find any student instantly by admission number, and keep every record free of duplicates.</p>
+</div>
+
+<div class="stat-row">
+    <div class="stat-card">
+        <span class="stat-number">{{ total_students }}</span>
+        <span class="stat-label">Students Registered</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-number">{{ total_courses }}</span>
+        <span class="stat-label">Courses</span>
+    </div>
+</div>
+
+<h3 class="section-title">Quick Actions</h3>
+<div class="action-row">
+    <a class="action-card" href="/records">
+        <h4>Manage Records</h4>
+        <p>Add, update or delete student records.</p>
+    </a>
+    <a class="action-card" href="/search">
+        <h4>Search Records</h4>
+        <p>Find a student instantly by admission number.</p>
+    </a>
+   <a class="action-card" href="/reports">
+    <h4>Reports</h4>
+    <p>Generate student lists by course and export them.</p>
+   </a>
+</div>
+{% endblock %}

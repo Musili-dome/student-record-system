@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Search Records{% endblock %}
+{% block subtitle %}Search Records{% endblock %}
+
+{% block content %}
+<div class="card search-card">
+    <h2>Search Records</h2>
+    <p class="hint">Admission number lookups use the hash table index. Name and phone searches walk the linked list, so partial matches work.</p>
+    <form method="POST" action="/search" class="search-bar">
+        <select name="field">
+            <option value="admission_no" {% if field == 'admission_no' %}selected{% endif %}>Admission Number</option>
+            <option value="full_name" {% if field == 'full_name' %}selected{% endif %}>Name</option>
+            <option value="contact" {% if field == 'contact' %}selected{% endif %}>Phone Number</option>
+        </select>
+        <input type="text" name="query" value="{{ query }}" placeholder="Type admission number, name or phone" required>
+        <button type="submit" class="btn btn-blue">Search</button>
+    </form>
+</div>
+
+{% if searched %}
+<div class="card result-card">
+    {% if results %}
+        <h2>{{ results|length }} record{{ '' if results|length == 1 else 's' }} found</h2>
+        <table class="records-table">
+            <tr><th>Adm. No.</th><th>Name</th><th>Course</th><th>Year</th><th>Contact</th><th>Email</th></tr>
+            {% for r in results %}
+            <tr>
+                <td>{{ r.admission_no }}</td>
+                <td>{{ r.full_name }}</td>
+                <td>{{ r.course }}</td>
+                <td>{{ r.year_of_study }}</td>
+                <td>{{ r.contact }}</td>
+
+                <td class="email-cell">{{ r.email or '-' }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <div class="flash error">No matching record found.</div>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

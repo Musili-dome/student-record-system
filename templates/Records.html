@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Manage Records{% endblock %}
+{% block subtitle %}Add / Manage Records{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="card form-card">
+        <h2>Student Record Form</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        {% endwith %}
+
+        {% if editing %}
+        <div class="edit-note">Editing {{ editing.admission_no }}. Change the details, including the admission number if it was entered wrongly, then press Update.</div>
+        {% endif %}
+
+        <form method="POST" action="{{ '/records/update' if editing else '/records/add' }}">
+            {% if editing %}
+            <input type="hidden" name="original_admission_no" value="{{ editing.admission_no }}">
+            {% endif %}
+
+            <label>Full Name</label>
+            <input type="text" name="full_name" placeholder="e.g. Jane Wanjiru"
+                   value="{{ editing.full_name if editing else '' }}">
+
+            <label>Admission Number</label>
+            <input type="text" name="admission_no" placeholder="e.g. DCS-01-0123"
+                   value="{{ editing.admission_no if editing else '' }}">
+
+            <label>Course</label>
+            <input type="text" name="course" placeholder="e.g. Computer Science"
+                   value="{{ editing.course if editing else '' }}">
+
+            <label>Year of Study</label>
+            <input type="text" name="year_of_study" placeholder="e.g. Year 2"
+                   value="{{ editing.year_of_study if editing else '' }}">
+
+            <label>Contact</label>
+            <input type="text" name="contact" placeholder="e.g. 07XXXXXXXX"
+                   value="{{ editing.contact if editing else '' }}">
+
+            <label>Email</label>
+            <input type="email" name="email" placeholder="e.g. jane@gmail.com"
+                   value="{{ editing.email if editing and editing.email else '' }}">
+
+            <div class="btn-row">
+                <button type="submit" formaction="/records/add" class="btn btn-green"
+                        {% if editing %}disabled{% endif %}>Add</button>
+                <button type="submit" formaction="/records/update" class="btn btn-blue">Update</button>
+                <button type="submit" formaction="/records/delete" class="btn btn-red">Delete</button>
+            </div>
+            {% if editing %}<a class="clear-link" href="/records">Clear form to add a new student</a>{% endif %}
+        </form>
+    </div>
+
+    <div class="card table-card">
+        <h2>Stored Records (Hash-Indexed)</h2>
+        <table class="records-table">
+            <tr><th>Adm. No.</th><th>Name</th><th>Course</th><th>Year</th><th>Contact</th><th>Email</th><th></th></tr>
+            {% for s in students %}
+            <tr>
+                <td>{{ s.admission_no }}</td>
+                <td>{{ s.full_name }}</td>
+                <td>{{ s.course }}</td>
+                <td>{{ s.year_of_study }}</td>
+                <td>{{ s.contact }}</td>
+                <td class="email-cell">{{ s.email or '-' }}</td>
+                <td><a href="/records?edit={{ s.admission_no }}">Edit</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}
