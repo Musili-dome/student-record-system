@@ -20,10 +20,11 @@ SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD", "")
 
 def get_db():
     return mysql.connector.connect(
-        host=os.environ.get("DB_HOST", "localhost"),
-        user=os.environ.get("DB_USER", "root"),
-        password=os.environ.get("DB_PASSWORD", ""),
-        database=os.environ.get("DB_NAME", "student_records"),
+        host=os.environ.get("MYSQLHOST", "localhost"),
+        user=os.environ.get("MYSQLUSER", "root"),
+        password=os.environ.get("MYSQLPASSWORD", ""),
+        database=os.environ.get("MYSQLDATABASE", "railway"),
+        port=int(os.environ.get("MYSQLPORT", 3306))
     )
 
 
